@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: grpc-helloworld-py
+  namespace: grpc
+  labels:
+    app: grpc-helloworld-py
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: grpc-helloworld-py
+  template:
+    metadata:
+      labels:
+        app: grpc-helloworld-py
+    spec:
+      containers:
+        - name: grpc-helloworld-py
+          image: mum.ocir.io/grpc-demo/grpc-helloworld-py:latest
+          imagePullPolicy: Always
+          env:
+            - name: podname
+              valueFrom:
+                fieldRef:
+                  apiVersion: v1
+                  fieldPath: metadata.name
+          ports:
+            - containerPort: 50051
+              name: grpc-port
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: grpc-helloworld-py
+  namespace: grpc
+  labels:
+    app: grpc-helloworld-py
+spec:
+  ports:
+    - port: 50051
+      name: grpc
+  selector:
+    app: grpc-helloworld-py
