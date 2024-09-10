@@ -15,13 +15,13 @@ spec:
         app: grpc-helloworld-py
     spec:
       imagePullSecrets: 
-      - name: <your-registry-secret>    
+      - name: ocirsecret    
       containers:
         - name: grpc-helloworld-py
-          image: <your-repo-name>/grpc-demo/grpc-helloworld-py:latest
+          image: <you-registry>/grpc-demo/grpc-helloworld-py:latest
           imagePullPolicy: Always
           env:
-            - name: podname
+            - name: POD_NAME
               valueFrom:
                 fieldRef:
                   apiVersion: v1
@@ -29,16 +29,3 @@ spec:
           ports:
             - containerPort: 50051
               name: grpc-port
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: grpc-helloworld-py
-  labels:
-    app: grpc-helloworld-py
-spec:
-  ports:
-    - port: 50051
-      name: grpc
-  selector:
-    app: grpc-helloworld-py

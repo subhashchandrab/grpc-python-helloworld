@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: grpc-helloworld-py
+  labels:
+    app: grpc-helloworld-py
+spec:
+  ports:
+    - port: 50051
+      name: grpc
+  selector:
+    app: grpc-helloworld-py
