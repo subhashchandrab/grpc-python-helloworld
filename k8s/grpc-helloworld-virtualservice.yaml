@@ -10,7 +10,7 @@ spec:
   http:
   - match:
     - uri:
-        prefix: /
+        prefix: /Greeter/SayHello
     route:
     - destination:
         host: grpc-helloworld-py
